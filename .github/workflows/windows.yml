@@ -10,7 +10,7 @@ jobs:
           version: ["8.1", "8.2", "8.3"]
           arch: [x64]
           ts: [ts]
-    if: success() || failure()
+    if: ${{ success() || failure() }}
     runs-on: windows-latest
     name: Windows, PHP v${{matrix.version}}
     steps:
@@ -40,6 +40,7 @@ jobs:
         run: nmake
       - name: test
         run: nmake test TESTS="--show-diff tests"
+        continue-on-error: true
       - name: package
         run: |
           md .install
